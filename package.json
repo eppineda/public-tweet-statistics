@@ -1,0 +1,26 @@
+{
+  "name": "public-tweet-statistics",
+  "version": "0.0.1",
+  "description": "node app for streaming public tweets",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^3.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eppineda/public-tweet-statistics.git"
+  },
+  "keywords": [
+    "twitter"
+  ],
+  "author": "enrique p. pineda",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/eppineda/public-tweet-statistics/issues"
+  },
+  "homepage": "https://github.com/eppineda/public-tweet-statistics#readme"
+}
