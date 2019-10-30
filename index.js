@@ -20,9 +20,9 @@ const onFailure = error => {
 }
 const start = async () => {
   const statistics = {
-    total: require('./statistics/total')
+    total: require('./statistics/total'),
   }
-  const total = await statistics.total.calculate()
+  const total = await statistics.total()
     .then(onSuccess)
     .catch(onFailure)
 }
