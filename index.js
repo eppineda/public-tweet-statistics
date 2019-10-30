@@ -21,8 +21,12 @@ const onFailure = error => {
 const start = async () => {
   const statistics = {
     total: require('./statistics/total'),
+    avgPerHour: require('./statistics/per-hour'),
   }
   const total = await statistics.total()
+    .then(onSuccess)
+    .catch(onFailure)
+  const avgPerHour = await statistics.avgPerHour()
     .then(onSuccess)
     .catch(onFailure)
 }
