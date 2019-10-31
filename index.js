@@ -28,6 +28,13 @@ const onFailure = error => {
   statistics.push(require('./statistics/per-hour'))
   statistics.push(require('./statistics/per-minute'))
   statistics.push(require('./statistics/per-second'))
+  statistics.push(require('./statistics/top-emojis'))
+  statistics.push(require('./statistics/pct-emojis'))
+  statistics.push(require('./statistics/top-hashtags'))
+  statistics.push(require('./statistics/pct-url'))
+  statistics.push(require('./statistics/pct-photo'))
+  statistics.push(require('./statistics/top-domains'))
+  
   for (let calculate of statistics) {
     await calculate()
     .then(onSuccess)
