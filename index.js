@@ -24,11 +24,19 @@ const start = async () => {
   const statistics = {
     total: require('./statistics/total'),
     avgPerHour: require('./statistics/per-hour'),
+    avgPerMinute: require('./statistics/per-minute'),
+    avgPerSecond: require('./statistics/per-second')
   }
   const total = await statistics.total()
     .then(onSuccess)
     .catch(onFailure)
   const avgPerHour = await statistics.avgPerHour()
+    .then(onSuccess)
+    .catch(onFailure)
+  const avgPerMinute = await statistics.avgPerMinute()
+    .then(onSuccess)
+    .catch(onFailure)
+  const avgPerSecond = await statistics.avgPerSecond()
     .then(onSuccess)
     .catch(onFailure)
 }
