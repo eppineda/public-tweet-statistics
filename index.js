@@ -53,7 +53,7 @@ const onFailure = error => {
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
-
+  
   for (let calculate of statistics) {
     await calculate()
     .then(onSuccess)
