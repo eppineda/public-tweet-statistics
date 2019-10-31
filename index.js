@@ -2,17 +2,36 @@
 
 const commander = require('commander')
 const program = new commander.Command()
+const errorCodes = {
+  TWITTER_API_KEY_: 1,
+}
+
+// process command line
 
 program.version('0.0.1')
-program
-  .option('-d, --debug', 'output extra debugging')
-
+program.option('-d, --debug', 'output extra debugging')
 program.parse(process.argv)
 
+const fs = require('fs')
+let key
+
+// read the twitter api key and consumer_secret
+
+try {
+  fs.readFile('api.json', (err, data) => {
+    if (err) throw err
+    key = JSON.parse(data); console.log(key)
+  })
+} catch (e) {
+  process.exit(errorCode.TWITTER_API_KEY)
+}
+
 if (!program.debug)
-  console.log = () => {}
+  console.error = console.log = () => {}
 else
   console.log(program.opts())
+
+// begin main execution
 
 const onSuccess = result => {
   console.log(`${ result.description }: ${ result.value }`)
@@ -34,7 +53,7 @@ const onFailure = error => {
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
-  
+
   for (let calculate of statistics) {
     await calculate()
     .then(onSuccess)
