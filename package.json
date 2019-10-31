@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/eppineda/public-tweet-statistics/issues"
   },
-  "homepage": "https://github.com/eppineda/public-tweet-statistics#readme"
+  "homepage": "https://github.com/eppineda/public-tweet-statistics#readme",
+  "bin": {
+    "tweets": "./index.js"
+  }
 }
