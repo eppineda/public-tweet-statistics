@@ -20,7 +20,8 @@ const onSuccess = result => {
 const onFailure = error => {
   console.error(error)
 }
-const start = async () => {
+
+(async () => {
   const statistics = []
 
   statistics.push(require('./statistics/total'))
@@ -32,6 +33,4 @@ const start = async () => {
     .then(onSuccess)
     .catch(onFailure)
   }
-}
-
-start()
+})()
