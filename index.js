@@ -21,24 +21,17 @@ const onFailure = error => {
   console.error(error)
 }
 const start = async () => {
-  const statistics = {
-    total: require('./statistics/total'),
-    avgPerHour: require('./statistics/per-hour'),
-    avgPerMinute: require('./statistics/per-minute'),
-    avgPerSecond: require('./statistics/per-second')
+  const statistics = []
+
+  statistics.push(require('./statistics/total'))
+  statistics.push(require('./statistics/per-hour'))
+  statistics.push(require('./statistics/per-minute'))
+  statistics.push(require('./statistics/per-second'))
+  for (let calculate of statistics) {
+    await calculate()
+    .then(onSuccess)
+    .catch(onFailure)
   }
-  const total = await statistics.total()
-    .then(onSuccess)
-    .catch(onFailure)
-  const avgPerHour = await statistics.avgPerHour()
-    .then(onSuccess)
-    .catch(onFailure)
-  const avgPerMinute = await statistics.avgPerMinute()
-    .then(onSuccess)
-    .catch(onFailure)
-  const avgPerSecond = await statistics.avgPerSecond()
-    .then(onSuccess)
-    .catch(onFailure)
 }
 
 start()
