@@ -12,20 +12,6 @@ program.version('0.0.1')
 program.option('-d, --debug', 'output extra debugging')
 program.parse(process.argv)
 
-const fs = require('fs')
-let key
-
-// read the twitter api key and consumer_secret
-
-try {
-  fs.readFile('api.json', (err, data) => {
-    if (err) throw err
-    key = JSON.parse(data); console.log(key)
-  })
-} catch (e) {
-  process.exit(errorCode.TWITTER_API_KEY)
-}
-
 if (!program.debug)
   console.error = console.log = () => {}
 else
@@ -42,7 +28,12 @@ const onFailure = error => {
 
 (async () => {
   const statistics = []
+  const tweets = await require('./tweets')
+  const stream = tweets.stream('statuses/sample')
 
+  stream.on('tweet', function (tweet) {
+    console.log(tweet)
+  })
   statistics.push(require('./statistics/total'))
   statistics.push(require('./statistics/per-hour'))
   statistics.push(require('./statistics/per-minute'))
@@ -53,7 +44,7 @@ const onFailure = error => {
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
-  
+
   for (let calculate of statistics) {
     await calculate()
     .then(onSuccess)

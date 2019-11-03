@@ -4,7 +4,8 @@
   "description": "node app for streaming public tweets",
   "main": "index.js",
   "dependencies": {
-    "commander": "^3.0.2"
+    "commander": "^3.0.2",
+    "twit": "^2.2.11"
   },
   "devDependencies": {},
   "scripts": {
