@@ -61,4 +61,5 @@ typings/
 .next
 
 # app-specific
+access.json
 api.json
