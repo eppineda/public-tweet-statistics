@@ -27,16 +27,16 @@ const onFailure = error => {
 }
 
 (async () => {
+  const connection = await require('./tweets')
+  const stream = connection.stream('statuses/sample')
   const rxjs = require('rxjs')
-  const subject = new rxjs.BehaviorSubject()
+  const tweets = new rxjs.BehaviorSubject()
   const statistics = []
-  const tweets = await require('./tweets')
-  const stream = tweets.stream('statuses/sample')
 
-  stream.on('tweet', function (tweet) {
-    subject.next(tweet)
+  stream.on('tweet', function (update) {
+    tweets.next(update)
   })
-  subject.subscribe(console.log)
+  tweets.subscribe(console.log)
   statistics.push(require('./statistics/total'))
   statistics.push(require('./statistics/per-hour'))
   statistics.push(require('./statistics/per-minute'))
