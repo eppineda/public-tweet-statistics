@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "commander": "^3.0.2",
+    "rxjs": "^6.5.3",
     "twit": "^2.2.11"
   },
   "devDependencies": {
