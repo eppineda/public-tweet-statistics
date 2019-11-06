@@ -29,11 +29,13 @@ const onFailure = error => {
 (async () => {
   const statistics = []
   const tweets = await require('./tweets')
+/*
   const stream = tweets.stream('statuses/sample')
 
   stream.on('tweet', function (tweet) {
     console.log(tweet)
   })
+*/
   statistics.push(require('./statistics/total'))
   statistics.push(require('./statistics/per-hour'))
   statistics.push(require('./statistics/per-minute'))
