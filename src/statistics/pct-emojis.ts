@@ -1,6 +1,6 @@
-module.exports = data => new Promise(function(resolve, reject) {
+module.exports = data => {
   const description = 'percentage of tweets with emojis'
 
-  // resolve({ description, value: true })
-  reject(`${ description }: not implemented`)
-})
+  // console.log(`${ description }: true`)
+  throw `${ description }: not implemented`
+}

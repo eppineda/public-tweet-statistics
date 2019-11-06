@@ -36,21 +36,32 @@ const onFailure = error => {
   stream.on('tweet', function (update) {
     tweets.next(update)
   })
-  tweets.subscribe(console.log)
+  /*
   statistics.push(require('./statistics/total'))
   statistics.push(require('./statistics/per-hour'))
   statistics.push(require('./statistics/per-minute'))
   statistics.push(require('./statistics/per-second'))
   statistics.push(require('./statistics/top-emojis'))
+  */
   statistics.push(require('./statistics/pct-emojis'))
+  /*
   statistics.push(require('./statistics/top-hashtags'))
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
+  */
 
+/*
   for (let calculate of statistics) {
-    await calculate()
-    .then(onSuccess)
-    .catch(onFailure)
+    tweets.subscribe(calculate)
+  }
+*/
+  let s
+  
+  try {
+    s = tweets.subscribe(statistics[0])
+  } catch (e) {
+    console.error(e)
+    s.unsubscribe()
   }
 })()
