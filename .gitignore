@@ -64,3 +64,6 @@ typings/
 access.json
 api.json
 tweets-labs.js
+
+# typescript
+dist

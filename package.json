@@ -7,7 +7,11 @@
     "commander": "^3.0.2",
     "twit": "^2.2.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.6",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
