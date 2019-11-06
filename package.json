@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/eppineda/public-tweet-statistics#readme",
   "bin": {
-    "tweets": "./index.js"
+    "tweets": "dist/index.js"
   }
 }
