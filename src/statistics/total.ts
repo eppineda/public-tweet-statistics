@@ -1,6 +1,4 @@
-module.exports = data => new Promise(function(resolve, reject) {
+module.exports = data => {
   const description = 'total number of tweets received'
 
-  // resolve({ description, value: true })
-  reject(`${ description }: not implemented`)
-})
+}

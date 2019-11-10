@@ -29,12 +29,12 @@ const onFailure = error => {
 (async () => {
   const connection = await require('./tweets')
   const stream = connection.stream('statuses/sample')
-  const rxjs = require('rxjs')
-  const tweets = new rxjs.BehaviorSubject()
+  const { BehaviorSubject } = require('rxjs')
+  const tweets$ = new BehaviorSubject()
   const statistics = []
 
   stream.on('tweet', function (update) {
-    tweets.next(update)
+    tweets$.next(update)
   })
   /*
   statistics.push(require('./statistics/total'))
@@ -42,26 +42,17 @@ const onFailure = error => {
   statistics.push(require('./statistics/per-minute'))
   statistics.push(require('./statistics/per-second'))
   statistics.push(require('./statistics/top-emojis'))
-  */
   statistics.push(require('./statistics/pct-emojis'))
-  /*
   statistics.push(require('./statistics/top-hashtags'))
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
-  */
 
-/*
+  const onError = e => console.error('doh! ${ e }')
+  const onComplete = () => { process.exit() }
+
   for (let calculate of statistics) {
-    tweets.subscribe(calculate)
+    let s = tweets$.subscribe(calculate, onError, onComplete)
   }
-*/
-  let s
-  
-  try {
-    s = tweets.subscribe(statistics[0])
-  } catch (e) {
-    console.error(e)
-    s.unsubscribe()
-  }
+  */
 })()
