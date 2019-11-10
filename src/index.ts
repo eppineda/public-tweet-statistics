@@ -2,9 +2,6 @@
 
 const commander = require('commander')
 const program = new commander.Command()
-const errorCodes = {
-  TWITTER_API_KEY_: 1,
-}
 
 // process command line
 
