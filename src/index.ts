@@ -32,10 +32,17 @@ const onFailure = error => {
   const { BehaviorSubject } = require('rxjs')
   const tweets$ = new BehaviorSubject()
   const statistics = []
+  const onError = e => console.error(`doh! ${ e }`)
+  const onComplete = () => { process.exit() }
 
   stream.on('tweet', function (update) {
     tweets$.next(update)
   })
+  tweets$.subscribe(console.log, onError, onComplete)
+  setTimeout(() => {
+    tweets$.complete()
+  }, 1000)
+
   /*
   statistics.push(require('./statistics/total'))
   statistics.push(require('./statistics/per-hour'))
@@ -47,9 +54,6 @@ const onFailure = error => {
   statistics.push(require('./statistics/pct-url'))
   statistics.push(require('./statistics/pct-photo'))
   statistics.push(require('./statistics/top-domains'))
-
-  const onError = e => console.error('doh! ${ e }')
-  const onComplete = () => { process.exit() }
 
   for (let calculate of statistics) {
     let s = tweets$.subscribe(calculate, onError, onComplete)
