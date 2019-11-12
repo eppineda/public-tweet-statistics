@@ -31,18 +31,19 @@ const onFailure = error => {
   const statistics = []
   const onError = e => console.error(`doh! ${ e }`)
   const onComplete = () => { process.exit() }
-  const TIME_LIMIT = 250
+  const TIME_LIMIT = 2500
+  const { MessageChannel } = require('worker_threads');
 
   stream.on('tweet', function (update) {
     tweets$.next(update)
   })
-  tweets$.subscribe(console.log, onError, onComplete)
+  tweets$.subscribe(() => {}, onError, onComplete)
   setTimeout(() => {
     tweets$.complete()
   }, TIME_LIMIT)
 
   const {
-    Worker, isMainThread, parentPort, workerData
+    Worker, isMainThread,
   } = require('worker_threads');
   const scripts = [
     './statistics/total.js',
@@ -60,13 +61,11 @@ const onFailure = error => {
   if (!isMainThread) process.exit() // nothing to do
 
   for (const s of scripts) {
-    const w = new Worker(s)
+    const w = new Worker(s); console.log(`Worker ${ w.threadId } - ${ s }`)
 
-    console.log(`Worker ${ w.threadId } - ${ s }`)
+    w.on('message', msg => {
+      console.log(`Thread ${ w.threadId } received: ${ msg }`)
+    })
+    w.postMessage('hi')
   }
-  /*
-  for (let calculate of statistics) {
-    let s = tweets$.subscribe(calculate, onError, onComplete)
-  }
-  */
 })()
