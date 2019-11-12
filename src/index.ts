@@ -31,6 +31,7 @@ const onFailure = error => {
   const statistics = []
   const onError = e => console.error(`doh! ${ e }`)
   const onComplete = () => { process.exit() }
+  const TIME_LIMIT = 250
 
   stream.on('tweet', function (update) {
     tweets$.next(update)
@@ -38,20 +39,32 @@ const onFailure = error => {
   tweets$.subscribe(console.log, onError, onComplete)
   setTimeout(() => {
     tweets$.complete()
-  }, 1000)
+  }, TIME_LIMIT)
 
+  const {
+    Worker, isMainThread, parentPort, workerData
+  } = require('worker_threads');
+  const scripts = [
+    './statistics/total.js',
+    './statistics/per-hour.js',
+    './statistics/per-minute.js',
+    './statistics/per-second.js',
+    './statistics/top-emojis.js',
+    './statistics/pct-emojis.js',
+    './statistics/top-hashtags.js',
+    './statistics/pct-url.js',
+    './statistics/pct-photo.js',
+    './statistics/top-domains.js',
+  ]
+
+  if (!isMainThread) process.exit() // nothing to do
+
+  for (const s of scripts) {
+    const w = new Worker(s)
+
+    console.log(`Worker ${ w.threadId } - ${ s }`)
+  }
   /*
-  statistics.push(require('./statistics/total'))
-  statistics.push(require('./statistics/per-hour'))
-  statistics.push(require('./statistics/per-minute'))
-  statistics.push(require('./statistics/per-second'))
-  statistics.push(require('./statistics/top-emojis'))
-  statistics.push(require('./statistics/pct-emojis'))
-  statistics.push(require('./statistics/top-hashtags'))
-  statistics.push(require('./statistics/pct-url'))
-  statistics.push(require('./statistics/pct-photo'))
-  statistics.push(require('./statistics/top-domains'))
-
   for (let calculate of statistics) {
     let s = tweets$.subscribe(calculate, onError, onComplete)
   }
