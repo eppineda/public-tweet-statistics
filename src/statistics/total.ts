@@ -5,8 +5,7 @@ const { parentPort } = require('worker_threads')
 
 parentPort.on('message', data => {
   const description = 'total number of tweets received'
-  let calculation
+  let calculation = data.length
 
-  // todo - parse and calculate
   parentPort.postMessage(`${ description }: ${ calculation }`)
 })

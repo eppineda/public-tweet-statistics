@@ -52,6 +52,8 @@ const onFailure = error => {
     './statistics/top-domains.js',
   ]
   const workers = {}
+  const tweets = []
+  const beautify = require('json-beautify')
 
   if (!isMainThread) process.exit() // nothing to do
 
@@ -65,9 +67,10 @@ const onFailure = error => {
   }
 
   stream.on('tweet', function (update) {
-    tweets$.next(update)
+    tweets$.next(update) // todo - observable still needed?
+    tweets.push(update); console.log(beautify(tweets, null, 2, 80))
     for (const w in workers) {
-      workers[w].postMessage(update)
+      workers[w].postMessage(tweets)
     }
   })
   tweets$.subscribe(() => {}, onError, onComplete)
