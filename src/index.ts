@@ -7,6 +7,7 @@ const program = new commander.Command()
 
 program.version('0.0.1')
 program.option('-d, --debug', 'output extra debugging')
+program.option('-t, --time <millseconds>', 'specify in milliseconds for how long to listen for new tweets (defaults to 2500)')
 program.parse(process.argv)
 
 if (!program.debug)
@@ -31,7 +32,7 @@ const onFailure = error => {
   const statistics = []
   const onError = e => console.error(`doh! ${ e }`)
   const onComplete = () => { process.exit() }
-  const TIME_LIMIT = 2500
+  const TIME_LIMIT = program.time || 2500; console.log(`listening for ${ TIME_LIMIT } millseconds`)
   const { MessageChannel } = require('worker_threads');
 
   stream.on('tweet', function (update) {
