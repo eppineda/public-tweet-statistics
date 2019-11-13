@@ -1,6 +1,12 @@
-module.exports = data => new Promise(function(resolve, reject) {
-  const description = 'top emojis'
+'use strict'
 
-  // resolve({ description, value: true })
-  reject(`${ description }: not implemented`)
+export {}
+const { parentPort } = require('worker_threads')
+
+parentPort.on('message', data => {
+  const description = 'top emojis'
+  let calculation
+
+  // todo - parse and calculate
+  parentPort.postMessage(`${ description }: ${ calculation }`)
 })

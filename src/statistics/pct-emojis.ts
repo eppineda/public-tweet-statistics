@@ -1,6 +1,12 @@
-module.exports = data => {
-  const description = 'percentage of tweets with emojis'
+'use strict'
 
-  // console.log(`${ description }: true`)
-  throw `${ description }: not implemented`
-}
+export {}
+const { parentPort } = require('worker_threads')
+
+parentPort.on('message', data => {
+  const description = 'percentage of tweets with emojis'
+  let calculation
+
+  // todo - parse and calculate
+  parentPort.postMessage(`${ description }: ${ calculation }`)
+})
