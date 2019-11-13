@@ -1,7 +1,10 @@
 #! /usr/bin/env node
 
+'use strict'
+
 const commander = require('commander')
 const program = new commander.Command()
+const OUTPUT = console.log
 
 // process command line
 
