@@ -11,6 +11,7 @@ const OUTPUT = console.log
 program.version('0.0.1')
 program.option('-d, --debug', 'output extra debugging')
 program.option('-t, --time <millseconds>', 'specify in milliseconds for how long to listen for new tweets (defaults to 2500)')
+program.option('--top-hashtags <count>', 'specify the top <count> hashtags (defaults to 3)')
 program.parse(process.argv)
 
 if (!program.debug)
@@ -36,6 +37,10 @@ const onFailure = error => {
   const onError = e => console.error(`doh! ${ e }`)
   const onComplete = () => { process.exit() }
   const TIME_LIMIT = program.time || 2500; console.log(`listening for ${ TIME_LIMIT } millseconds`)
+  const COUNT_TOP_HASHTAGS = program.topHashtags || 3; console.log(`calculating top ${ COUNT_TOP_HASHTAGS } hashtags`)
+  const instructions = {
+    topHashtags: COUNT_TOP_HASHTAGS,
+  }
   const {
     isMainThread, MessageChannel, Worker,
   } = require('worker_threads');
@@ -70,7 +75,7 @@ const onFailure = error => {
     tweets$.next(update) // todo - observable still needed?
     tweets.push(update); console.log(beautify(tweets, null, 2, 80))
     for (const w in workers) {
-      workers[w].postMessage(tweets)
+      workers[w].postMessage({ instructions, tweets })
     }
   })
   tweets$.subscribe(() => {}, onError, onComplete)
