@@ -28,7 +28,7 @@ const updateTally = emojis => {
   })
 }
 const searchHashtags = data => {
-  data.tweets.forEach(t => {
+  data.tweets.forEach(t => { console.log(`tweet: ${ t.text }`)
 // examine each tweets for any hashtags used
     const tags = []
     const s = new Set(Object.keys(tally))
@@ -46,7 +46,7 @@ const searchHashtags = data => {
   })
 } // searchHashtags
 const searchTweets = data => {
-  data.tweets.forEach(t => { // todo - finish
+  data.tweets.forEach(t => { console.log(`tweet: ${ t.text }`)
     const emojis = []
     const s = new Set(Object.keys(tally))
 
