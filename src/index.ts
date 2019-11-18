@@ -38,8 +38,8 @@ const onFailure = error => {
   const onError = e => console.error(`doh! ${ e }`)
   const onComplete = () => { process.exit() }
   const TIME_LIMIT = program.time || 2500; console.log(`listening for ${ TIME_LIMIT } millseconds`)
-  const COUNT_TOP_HASHTAGS = program.topHashtags || 3; console.log(`calculating top ${ COUNT_TOP_HASHTAGS } hashtags`)
-  const COUNT_TOP_EMOJIS = program.topEmojis || 3; console.log(`calculating top ${ COUNT_TOP_EMOJIS } emojis`)
+  const COUNT_TOP_HASHTAGS = program.topHashtags || 10; console.log(`calculating top ${ COUNT_TOP_HASHTAGS } hashtags`)
+  const COUNT_TOP_EMOJIS = program.topEmojis || 10; console.log(`calculating top ${ COUNT_TOP_EMOJIS } emojis`)
   const instructions = {
     topHashtags: COUNT_TOP_HASHTAGS,
     topEmojis: COUNT_TOP_EMOJIS,
