@@ -1,9 +1,12 @@
 # public-tweet-statistics
 Samples public tweets in real-time, while calculating some simple statistics
 
-## Installation
+## Installation and Transpilation
 1. git clone git@github.com:eppineda/public-tweet-statistics.git
 2. npm install
+3. tsc
+4. cd dist
+5. node index.js --help
 
 ## Usage Examples
 ```
