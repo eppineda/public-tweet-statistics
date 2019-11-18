@@ -3,11 +3,19 @@
 export {}
 const { parentPort } = require('worker_threads')
 const beautify = require('json-beautify')
-const searchEmoji = s => { /* todo - finish.
-    https://www.npm.red/package/emoji-regex
-*/
-  let found = [ 'smiley', 'frownie' ]
+const searchEmoji = searched => {
+  let found = []
+  const regex = require('emoji-regex/text.js')()
+  let match
 
+  searched.forEach(s => {
+    if (match = regex.exec(s)) {
+      const emoji = match
+
+      console.log(`emoji: ${ match }`)
+      found.push(emoji)
+    }
+  })
   return found
 }
 const tally = {}
@@ -31,7 +39,6 @@ const searchHashtags = data => {
   data.tweets.forEach(t => { console.log(`tweet: ${ t.text }`)
 // examine each tweets for any hashtags used
     const tags = []
-    const s = new Set(Object.keys(tally))
 
     console.log(`tally: tags tracked ${ beautify(tally, null, 2, 80) }`)
     t.entities.hashtags.forEach(t => {
@@ -46,13 +53,14 @@ const searchHashtags = data => {
   })
 } // searchHashtags
 const searchTweets = data => {
-  data.tweets.forEach(t => { console.log(`tweet: ${ t.text }`)
-    const emojis = []
-    const s = new Set(Object.keys(tally))
+  const tweets = []
+  const emojis = []
 
-    emojis.push(...searchEmoji(t))
-    updateTally(emojis)
+  data.tweets.forEach(t => { console.log(`tweet: ${ t.text }`)
+    tweets.push(t.text)
   })
+  emojis.push(...searchEmoji(tweets))
+  updateTally(emojis)
 } // searchTweets
 
 parentPort.on('message', data => {
