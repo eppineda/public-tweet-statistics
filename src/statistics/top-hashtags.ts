@@ -8,8 +8,12 @@ console.log = () => {} // comment out for debugging
 parentPort.on('message', data => {
   const description = 'top hashtags'
   const max = data.instructions.topHashtags
+  const format = entry => {
+    formatted += `${ entry[0] }-${ entry[1] } `
+  }
   const tally = {}
   let calculation
+  let formatted = ''
 
   data.tweets.forEach(t => {
 // examine each tweets for any hashtags used
@@ -36,5 +40,6 @@ parentPort.on('message', data => {
   })
 // report only the top <max> hashtags
   calculation = Object.entries(tally).sort((a: any, b: any) => b[1] - a[1]).slice(0, max)
-  parentPort.postMessage(`${ description }: ${ calculation }`)
+  calculation.forEach(format)
+  parentPort.postMessage(`${ description }: ${ formatted }`)
 })
