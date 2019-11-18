@@ -6,9 +6,11 @@ Samples public tweets in real-time, while calculating some simple statistics
 2. npm install
 
 ## Usage Examples
+```
 node index.js --help                    command line help
 node index.js                           sample public tweets and accept default statistics calculations
 node index.js -d                        add debug-level console logging
 node index.js -t 30000                  run for 30 seconds 
 node index.js --top-hashtags 25         top 25 hashtags
 node index.js --top-emojis 5            top 5 emojis
+```
