@@ -65,13 +65,18 @@ const searchTweets = data => {
 
 parentPort.on('message', data => {
   const description = 'top emojis'
-  const max = data.instructions.topHashtags
+  const max = data.instructions.topEmojis
+  const format = entry => {
+    formatted += `${ entry[0] }-${ entry[1] } `
+  }
   let calculation
+  let formatted = ''
 
   searchHashtags(data)
   searchTweets(data)
 
 // report only the top <max> emojis
   calculation = Object.entries(tally).sort((a: any, b: any) => b[1] - a[1]).slice(0, max)
-  parentPort.postMessage(`${ description }: ${ calculation }`)
+  calculation.forEach(format)
+  parentPort.postMessage(`${ description }: ${ formatted }`)
 })

@@ -12,6 +12,7 @@ program.version('0.0.1')
 program.option('-d, --debug', 'output extra debugging')
 program.option('-t, --time <millseconds>', 'specify in milliseconds for how long to listen for new tweets (defaults to 2500)')
 program.option('--top-hashtags <count>', 'specify the top <count> hashtags (defaults to 3)')
+program.option('--top-emojis <count>', 'specify the top <count> emojis (defaults to 3)')
 program.parse(process.argv)
 
 if (!program.debug)
@@ -38,8 +39,10 @@ const onFailure = error => {
   const onComplete = () => { process.exit() }
   const TIME_LIMIT = program.time || 2500; console.log(`listening for ${ TIME_LIMIT } millseconds`)
   const COUNT_TOP_HASHTAGS = program.topHashtags || 3; console.log(`calculating top ${ COUNT_TOP_HASHTAGS } hashtags`)
+  const COUNT_TOP_EMOJIS = program.topEmojis || 3; console.log(`calculating top ${ COUNT_TOP_EMOJIS } emojis`)
   const instructions = {
     topHashtags: COUNT_TOP_HASHTAGS,
+    topEmojis: COUNT_TOP_EMOJIS,
   }
   const {
     isMainThread, MessageChannel, Worker,
